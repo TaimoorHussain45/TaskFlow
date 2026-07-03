@@ -1,18 +1,16 @@
-import Box from "@/src/component/Box";
-import Button from "@/src/component/Button";
-import Typography from "@/src/component/Typography";
+import Box from "@/src/component/ui/Box";
+import Button from "@/src/component/ui/Button";
+import Typography from "@/src/component/ui/Typography";
 import { AppTheme } from "@/src/constant/colors";
 import { onBoardingData } from "@/src/constant/Data";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { ChevronRight } from "lucide-react-native";
 import React, { useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOnBoardingStyle } from "./style";
-
 const OnBoarding = () => {
   const theme = useTheme<AppTheme>();
   const styles = useOnBoardingStyle(theme);
@@ -22,11 +20,11 @@ const OnBoarding = () => {
   const isLastPage = currentPage === onBoardingData.length - 1;
 
   const handleSkipButton = () => {
-    router.replace("/../screen/login/index");
+    router.replace("../login");
   };
   const onContinuePress = () => {
     if (isLastPage) {
-      router.replace("/../screen/(auth)/login/index");
+      router.replace("../login");
       return;
     }
     pagerRef.current?.setPage(currentPage + 1);
@@ -97,8 +95,8 @@ const OnBoarding = () => {
               <Typography
                 color={theme.colors.text}
                 paddingVertical={10}
-                variant="h4"
                 align="center"
+                style={styles.title}
               >
                 {element.title}
               </Typography>
@@ -106,7 +104,7 @@ const OnBoarding = () => {
                 align="center"
                 variant="body1"
                 paddingVertical={10}
-                color={theme.colors.mutedForeground}
+                color={theme.colors.gray}
               >
                 {element.subtitle}
               </Typography>
@@ -119,7 +117,9 @@ const OnBoarding = () => {
         title={isLastPage ? "GetStarted" : "Next"}
         onPress={onContinuePress}
         containerStyle={styles.FooterButton}
-        rightIcon={<ChevronRight size={20} color={theme.colors.offWhite} />}
+        titleColor={theme.colors.offWhite}
+        rightIcon="chevron-forward"
+        rightIconSize={19}
       />
     </SafeAreaView>
   );

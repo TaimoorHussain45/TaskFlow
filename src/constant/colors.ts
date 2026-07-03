@@ -35,13 +35,10 @@ export type ThemeColors = typeof MD3Colors & {
   // Success
   successDim: string;
 
-  // Warning
   warningDim: string;
   primaryForeground: string;
-  // Danger
   dangerDim: string;
 
-  // Other
   blue: string;
   blueDim: string;
   purple: string;
@@ -56,12 +53,23 @@ export type ThemeColors = typeof MD3Colors & {
   statusBar: string;
   tabBar: string;
   secondary: string;
+  secondaryForeground: string;
   offWhite: string;
   darkBlack: string;
   cloudBlue: string;
   tint: string;
   foreGround: string;
   cardForeground: string;
+  softIndigo: string;
+  accentForeground: string;
+  destructive: string;
+  accent: string;
+  destructiveForeground: string;
+  input: string;
+  orange: string;
+  orangeDim: string;
+  softViolet: string;
+  gray: string;
 };
 
 export type AppTheme = MD3Theme & {
@@ -73,11 +81,14 @@ export type AppColors = {
   dark: ThemeColors;
 };
 
-const commonColors = {
+export const commonColors = {
   offWhite: "#FFFFFF",
   darkBlack: "#000000",
   cloudBlue: "#EBEDFA",
   periwinkleLight: " #CACBF9",
+  softIndigo: "#7570ED",
+  softViolet: "#B1ADFE",
+  gray: "#8B96A5",
 };
 
 // In your theme constants file
@@ -101,10 +112,9 @@ export const colors: AppColors = {
     accent: "#eef2ff",
     accentForeground: "#6366f1",
     destructive: "#ef4444",
-    destructiveForeground: "#ffffff",
-    border: "#e2e8f0",
+    border: "#E8E9EB",
     input: "#e2e8f0",
-    surface: "#ffffff",
+    surface: "#000000",
     success: "#22c55e",
     successDim: "#dcfce7",
     warning: "#f59e0b",
@@ -120,12 +130,13 @@ export const colors: AppColors = {
     text: "#f1f5f9",
     tint: "#818cf8",
     background: "#0f172a",
-    foreground: "#f1f5f9",
+
+    foreGround: "#f1f5f9",
     card: "#1e293b",
     cardForeground: "#f1f5f9",
     primary: "#6366f1",
     primaryDim: "#1e1b4b",
-    primaryForeground: "#ffffff",
+    primaryForeground: "#1E293D",
     secondary: "#1e293b",
     secondaryForeground: "#f1f5f9",
     muted: "#1e293b",
@@ -133,8 +144,7 @@ export const colors: AppColors = {
     accent: "#1e1b4b",
     accentForeground: "#818cf8",
     destructive: "#ef4444",
-    destructiveForeground: "#ffffff",
-    border: "#334155",
+    border: "#2E384A",
     input: "#334155",
     surface: "#1e293b",
     success: "#22c55e",

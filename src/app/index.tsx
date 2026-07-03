@@ -1,10 +1,11 @@
 import { View } from "react-native";
-import OnBoarding from "../screen/(auth)/onBoarding";
+import Register from "../screen/auth/Register";
 
 export default function Index() {
   return (
     <View style={{ flex: 1 }}>
-      <OnBoarding />
+      <Register />
+      {/* <OnBoarding /> */}
     </View>
   );
 }

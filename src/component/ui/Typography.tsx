@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TextStyle } from "react-native";
 import { TextProps as PaperTextProps, Text } from "react-native-paper";
-import { Fonts } from "../constant/font";
+import { Fonts } from "../../constant/font";
 
 export type TypographyVariant =
   | "h1"
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semiBold,
   },
   h4: {
-    fontSize: 20,
+    fontSize: 14,
     fontFamily: Fonts.semiBold,
   },
   body1: {

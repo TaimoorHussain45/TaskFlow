@@ -1,4 +1,5 @@
 import { AppTheme } from "@/src/constant/colors";
+import { Fonts } from "@/src/constant/font";
 import { useMemo } from "react";
 import { StyleSheet } from "react-native";
 export const useOnBoardingStyle = (theme: AppTheme) => {
@@ -16,6 +17,10 @@ export const useOnBoardingStyle = (theme: AppTheme) => {
         },
         footer: {
           paddingVertical: 10,
+        },
+        title: {
+          fontSize: 18,
+          fontFamily: Fonts.semiBold,
         },
         FooterButton: {
           width: "100%",
