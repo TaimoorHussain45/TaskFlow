@@ -77,7 +77,7 @@ const Button = ({
         <Ionicons
           name={rightIcon}
           size={rightIconSize}
-          color={rightIconColor ?? theme.colors.offWhite}
+          color={rightIconColor}
           style={rightIconStyle}
         />
       )}

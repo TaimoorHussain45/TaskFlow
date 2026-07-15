@@ -1,8 +1,13 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
+import React from "react";
+import { AppState } from "react-native";
 import { PaperProvider } from "react-native-paper";
+import { supabase } from "../api/supabaseClient";
 import { ThemeProvider, useThemeContext } from "../constant/ThemeContext";
 import { darkTheme, lightTheme } from "../constant/colors";
+import { queryClient } from "../lib/queryClient";
 
 function RootLayoutContent() {
   const [fontsLoaded] = useFonts({
@@ -12,26 +17,34 @@ function RootLayoutContent() {
     PoppinsBold: require("../../assets/Fonts/Poppins-Bold.ttf"),
   });
 
-  const { isDark } = useThemeContext();
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") {
+        supabase.auth.startAutoRefresh();
+      } else {
+        supabase.auth.stopAutoRefresh();
+      }
+    });
 
+    return () => subscription.remove();
+  }, []);
+  const { isDark } = useThemeContext();
   if (!fontsLoaded) {
     return null;
   }
   return (
     <PaperProvider theme={isDark ? darkTheme : lightTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
+      <Slot />
     </PaperProvider>
   );
 }
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <RootLayoutContent />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <RootLayoutContent />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

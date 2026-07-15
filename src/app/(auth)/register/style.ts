@@ -10,19 +10,7 @@ export const useRegisterStyle = (theme: AppTheme, insets: any) => {
           padding: 20,
           backgroundColor: theme.colors.secondary,
         },
-        arrowBack: {
-          width: 36,
-          height: 36,
-          borderRadius: 7,
-          borderWidth: 1,
-          borderColor: theme.colors.text,
-          justifyContent: "center",
-          alignItems: "center",
-          elevation: 5,
-          marginTop: 15,
-          opacity: 0.7,
-          backgroundColor: theme.colors.primaryForeground,
-        },
+
         headerContent: {
           marginVertical: 10,
         },

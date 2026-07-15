@@ -3,6 +3,7 @@ import AuthTextInput from "@/src/component/Auth/AuthTextInput";
 import Button from "@/src/component/ui/Button";
 import Typography from "@/src/component/ui/Typography";
 import { AppTheme } from "@/src/constant/colors";
+import { isEmpty, isValidEmail } from "@/src/utlis/validator";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -24,10 +25,41 @@ const Login = () => {
   const theme = useTheme<AppTheme>();
   const styles = useLoginStyle(theme);
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("testing12@gmail.com");
+  const [password, setPassword] = useState("12345678");
+  const [errors, setErrors] = useState({ emailError: "", passwordError: "" });
 
-  const handleLogin = () => {};
+  const validate = () => {
+    const newEmailError = isEmpty(email)
+      ? "Please enter your email"
+      : !isValidEmail(email)
+        ? "Please enter a valid email"
+        : "";
+
+    const newPasswordError = isEmpty(password)
+      ? "Please enter your password"
+      : "";
+    setErrors({
+      emailError: newEmailError,
+      passwordError: newPasswordError,
+    });
+
+    return !newEmailError && !newPasswordError;
+  };
+  const handleLogin = async () => {
+    // if (!validate()) return;
+    // const payload = {
+    //   email: email,
+    //   password: password,
+    // };
+    try {
+      // const res = await authServices.signIn(payload);
+      // console.log("Data in sign in", res);
+      router.replace("/(main)/(tabs)/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const handleGoogleLogin = () => {
   //   // Handle Google login logic here
@@ -36,10 +68,10 @@ const Login = () => {
   //   // Handle Apple login logic here
   // };
   const handleForgotPassword = () => {
-    // router.replace("/forgotPassword");
+    router.replace("/forgotpassword");
   };
   const handleSignUp = () => {
-    router.replace("/(auth)/singUp");
+    router.replace("/register");
   };
   return (
     <View style={styles.screen}>
@@ -102,21 +134,15 @@ const Login = () => {
               backgroundColor={theme.colors.primaryDim}
               borderWidth={2}
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (text.trim())
+                  setErrors((prev) => ({ ...prev, emailError: "" }));
+              }}
+              error={!!errors.emailError}
+              errorMessage={errors.emailError}
             />
-            {/* <AuthInput
-              placeholder="Enter your password"
-              iconLeft="lock-closed-outline"
-              label="Password"
-              labelColor={theme.colors.text}
-              iconRight="eye"
-              backgroundColor={theme.colors.background}
-              borderColor={theme.colors.border}
-              borderWidth={2}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            /> */}
+
             <AuthPasswordInput
               placeholder="Enter your password"
               iconLeft="lock-closed-outline"
@@ -124,10 +150,14 @@ const Login = () => {
               value={password}
               backgroundColor={theme.colors.background}
               borderColor={theme.colors.border}
-              // onChangeText={handlePasswordChange}
+              onChangeText={(text) => {
+                setPassword(text);
+                if (text.trim())
+                  setErrors((prev) => ({ ...prev, passwordError: "" }));
+              }}
               secureTextEntry
-              // error={!!errors.passwordError}
-              // errorMessage={errors.passwordError}
+              error={!!errors.passwordError}
+              errorMessage={errors.passwordError}
             />
           </View>
           <TouchableOpacity onPress={handleForgotPassword}>

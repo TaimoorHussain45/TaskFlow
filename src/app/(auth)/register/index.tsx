@@ -1,9 +1,12 @@
 import AuthPasswordInput from "@/src/component/Auth/AuthPassword";
 import AuthTextInput from "@/src/component/Auth/AuthTextInput";
 
+import BackButton from "@/src/component/ui/BackButton";
 import Button from "@/src/component/ui/Button";
 import Typography from "@/src/component/ui/Typography";
 import { AppTheme } from "@/src/constant/colors";
+import { authServices } from "@/src/services/auth";
+import { doPasswordsMatch, isEmpty, isValidEmail } from "@/src/utlis/validator";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -29,17 +32,76 @@ const Register = () => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: "Test",
+    email: "cohovi3305@duvips.com",
+    password: "12345678",
+    confirmPassword: "12345678",
   });
+  const [errors, setErrors] = useState({
+    nameError: "",
+    emailError: "",
+    passwordError: "",
+    confirmPasswordError: "",
+  });
+  const onSignIn = () => {
+    console.log("working 1");
+    router.replace("/(auth)/login");
+    console.log("working 2");
+  };
+  const handleChange = (
+    field: keyof typeof formData,
+    text: string,
+    errorField: keyof typeof errors,
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: text }));
 
+    if (text.trim()) {
+      setErrors((prev) => ({ ...prev, [errorField]: "" }));
+    }
+  };
+  const validate = () => {
+    const newNameError = isEmpty(formData.name) ? "Please enter your name" : "";
+    const newEmailError = isEmpty(formData.email)
+      ? "Please enter your email"
+      : !isValidEmail(formData.email)
+        ? "Please enter a valid email"
+        : "";
+
+    const newPasswordError = isEmpty(formData.password)
+      ? "Please enter your password"
+      : "";
+    const newConfirmPasswordError = isEmpty(formData.confirmPassword)
+      ? "Please enter your password"
+      : !doPasswordsMatch(formData.password, formData.confirmPassword)
+        ? "Password does not match"
+        : "";
+    setErrors({
+      nameError: newNameError,
+      emailError: newEmailError,
+      passwordError: newPasswordError,
+      confirmPasswordError: newConfirmPasswordError,
+    });
+    return Object.values(errors).every((msg) => msg === "");
+  };
+  const handleBackPress = () => router.replace("/(auth)/login");
+  const onSignUp = async () => {
+    if (!validate()) return;
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+    try {
+      const res = await authServices.signUp(payload);
+      console.log("Data", res);
+      router.replace("/(auth)/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.screen}>
-      <View style={styles.arrowBack}>
-        <Ionicons name="arrow-back" size={20} color={theme.colors.text} />
-      </View>
+      <BackButton onPress={handleBackPress} />
       <View style={styles.headerContent}>
         <Typography color={theme.colors.text} variant="h3" align="left">
           Create Account
@@ -101,7 +163,11 @@ const Register = () => {
               backgroundColor={theme.colors.background}
               borderWidth={2}
               value={formData.name}
-              // onChangeText={(text: string) => setFormData(text)}
+              onChangeText={(text: string) =>
+                handleChange("name", text, "nameError")
+              }
+              error={!!errors.nameError}
+              errorMessage={errors.nameError}
             />
             <AuthTextInput
               placeholder="ahmad@example.com"
@@ -114,7 +180,11 @@ const Register = () => {
               backgroundColor={theme.colors.background}
               borderWidth={2}
               value={formData.email}
-              // onChangeText={setEmail}
+              onChangeText={(text: string) =>
+                handleChange("email", text, "emailError")
+              }
+              error={!!errors.emailError}
+              errorMessage={errors.emailError}
             />
 
             <AuthPasswordInput
@@ -128,6 +198,11 @@ const Register = () => {
               backgroundColor={theme.colors.background}
               borderColor={theme.colors.border}
               secureTextEntry
+              onChangeText={(text: string) =>
+                handleChange("password", text, "passwordError")
+              }
+              error={!!errors.passwordError}
+              errorMessage={errors.passwordError}
             />
             <AuthPasswordInput
               placeholder="confirm password"
@@ -139,20 +214,26 @@ const Register = () => {
               value={formData.confirmPassword}
               backgroundColor={theme.colors.background}
               borderColor={theme.colors.border}
+              onChangeText={(text: string) =>
+                handleChange("confirmPassword", text, "confirmPasswordError")
+              }
               secureTextEntry
+              error={!!errors.confirmPasswordError}
+              errorMessage={errors.confirmPasswordError}
             />
           </View>
           <Button
             title="Create Account"
             titleColor={theme.colors.offWhite}
             containerStyle={styles.signUpButton}
+            onPress={onSignUp}
           />
 
           <View style={styles.signInRow}>
             <Typography color={theme.colors.gray} variant="body2">
               Already have an account?
             </Typography>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onSignIn}>
               <Typography color={theme.colors.primary} variant="h4">
                 Sign in
               </Typography>

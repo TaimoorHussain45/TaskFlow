@@ -20,3 +20,24 @@ export const useCustomButtonStyle = (theme: AppTheme) => {
     [theme],
   );
 };
+export const useBackButtonStyle = (theme: AppTheme) => {
+  return useMemo(
+    () =>
+      StyleSheet.create({
+        arrowBack: {
+          width: 36,
+          height: 36,
+          borderRadius: 10,
+          borderWidth: 1,
+          borderColor: theme.colors.text,
+          justifyContent: "center",
+          alignItems: "center",
+          elevation: 5,
+          marginTop: 15,
+          opacity: 0.7,
+          backgroundColor: theme.colors.primaryForeground,
+        },
+      }),
+    [theme],
+  );
+};
