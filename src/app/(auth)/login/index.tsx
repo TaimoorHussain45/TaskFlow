@@ -55,7 +55,7 @@ const Login = () => {
     try {
       // const res = await authServices.signIn(payload);
       // console.log("Data in sign in", res);
-      router.replace("/(main)/(tabs)/home");
+      router.replace("/(main)/(tabs)");
     } catch (error) {
       console.log(error);
     }

@@ -1,15 +1,28 @@
+import { AppTheme } from "@/src/constant/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { useTheme } from "react-native-paper";
+import { useTabBarStyle } from "./styles";
 
 export default function TabsLayout() {
+  const theme = useTheme<AppTheme>();
+  const styles = useTabBarStyle(theme);
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: styles.screen,
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.gray,
+        tabBarItemStyle: styles.tabBarContainer,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />

@@ -16,14 +16,16 @@ export default function DashboardHeader() {
           Good afternoon,
         </Typography>
         <View style={styles.rightContent}>
-          <Typography variant="h2">Ahmad</Typography>
+          <Typography variant="h2" color={theme.colors.text}>
+            Ahmad
+          </Typography>
           <Typography variant="h1">👋</Typography>
         </View>
       </View>
       <View style={styles.bellIcon}>
         <Ionicons
           name="notifications-outline"
-          size={30}
+          size={19}
           color={theme.colors.primary}
         />
       </View>

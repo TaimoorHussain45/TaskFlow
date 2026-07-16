@@ -6,6 +6,8 @@ export const useDashboardStyle = (theme: AppTheme) => {
     () =>
       StyleSheet.create({
         screen: {
+          flex: 1,
+          marginTop: 20,
           backgroundColor: theme.colors.card,
           //   borderRadius: 20,
           borderColor: theme.colors.border,
@@ -23,10 +25,48 @@ export const useDashboardStyle = (theme: AppTheme) => {
           gap: 5,
         },
         bellIcon: {
-          height: 40,
-          width: 40,
+          height: 50,
+          width: 50,
+          elevation: 5,
           borderRadius: 15,
-          backgroundColor: theme.colors.cloudBlue,
+          backgroundColor: theme.colors.muted,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      }),
+    [theme],
+  );
+};
+export const useProgressCardStyle = (theme: AppTheme) => {
+  return useMemo(
+    () =>
+      StyleSheet.create({
+        screen: {
+          backgroundColor: theme.colors.card,
+          borderRadius: 20,
+          borderColor: theme.colors.border,
+          borderWidth: 2,
+          flexDirection: "column",
+          padding: 15,
+          elevation: 1.5,
+          justifyContent: "space-between",
+          width: "48%",
+          height: "40%",
+        },
+        content: {
+          // marginTop: 10,
+          flexDirection: "row",
+          gap: 5,
+        },
+        topContent: {
+          flexDirection: "column",
+          marginLeft: 5,
+        },
+
+        bellIcon: {
+          height: 45,
+          width: 45,
+          borderRadius: 15,
           justifyContent: "center",
           alignItems: "center",
         },

@@ -119,6 +119,7 @@ const OnBoarding = () => {
         containerStyle={styles.FooterButton}
         titleColor={theme.colors.offWhite}
         rightIcon="chevron-forward"
+        rightIconColor={theme.colors.offWhite}
         rightIconSize={19}
       />
     </SafeAreaView>
